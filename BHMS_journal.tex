@@ -1,0 +1,883 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Bhandari, Harsha, Molli, Srinivasan %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% On the Probabilistic Degree of OR over the Reals %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% LOG %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% FSTTCS Submitted: 30 Jul, 2018 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% GLOBAL MACROS %%%%%%%%%%%%%
+\newif\ifpublic
+\publictrue %%%%  Author's notes and TODO's suppressed
+%\publicfalse %%%% Author's notes and TODO's displayed
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifpublic
+\documentclass[10pt,a4paper]{article}
+\else
+\documentclass[10pt,draft,a4paper]{article}
+\fi
+% ====================================================
+
+
+
+
+\usepackage[pagebackref,colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,pdfstartview=FitH]{hyperref}
+%\usepackage{mathpazo}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[russian,english]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage{blkarray}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{bbm} 
+\usepackage{nicefrac,xfrac} 
+
+%%%%% Author Notes
+\ifpublic
+\usepackage[disable]{todonotes}
+\else
+\usepackage[colorinlistoftodos]{todonotes}
+\fi
+\newcommand{\phnote}[1]{\todo[color=red!100!green!33, size=\footnotesize]{ph: #1}}
+\newcommand{\sidnote}[1]{\todo[color=yellow, size=\footnotesize]{sid: #1}}
+\newcommand{\tmnote}[1]{\todo[color=green,size=\footnotesize]{tm: #1}}
+\newcommand{\prahladhuvacha}[1]{\todo[color=red!100!green!33,inline,size=\small]{ph: #1}}
+
+%%%%% Same Thanks
+\newcommand*\samethanks[1][\value{footnote}]{\footnotemark[#1]}
+
+%%%%% Packages
+
+%%% For clean references
+\usepackage[capitalize,nameinlink]{cleveref}
+\renewcommand{\eqref}[1]{\hyperref[#1]{(\ref*{#1})}}
+
+
+%%%% Theorem Environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\numberwithin{theorem}{section}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{subclaim}[theorem]{Subclaim}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{question}{Question}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+%\newtheorem{conjecture}{Conjecture}
+%\theoremstyle{empty}
+%\newtheorem{proof}{Proof}
+
+
+%%% General Math shortcuts
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\eps}{\epsilon}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\OR}{\mathrm{OR}}
+\newcommand{\AC}{\mbox{\rm AC}}
+\newcommand{\field}{\mathbb{F}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\integer}{\mathbb{Z}}
+\newcommand{\rational}{\mathbb{Q}}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\Ee}{\operatorname{\mathbb{E}}}
+\newcommand{\disjunion}{\mathbin{\dot{\cup}}}
+\newcommand{\union}{\mathbin{\cup}}
+
+%%% Other shortcuts
+\newcommand{\etal}{\emph{et al.}}
+
+%%% Paper specific shortcuts
+\newcommand{\pdeg}{\operatorname{P-deg}}
+\newcommand{\hcpdeg}{\operatorname{hcP-deg}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\distP}{\mathbf{P}}
+\newcommand{\distL}{\mathbf{L}}
+\newcommand{\calD}{{\mathcal{D}}}
+\newcommand{\calU}{{\mathcal{U}}}
+\newcommand{\calL}{{\mathcal{L}}}
+
+% % General Tricks
+\newcommand{\prob}[2]{\Pr_{#1}\left[ #2 \right]}
+% \newcommand{\avg}[2]{\mathop{\textbf{E}}_{#1}[#2]}
+% \newcommand{\poly}{\mathop{\mathrm{poly}}}
+% \newcommand{\tm}[1]{\textrm{#1}}
+% \newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\bra}[1]{\{#1\}}
+\newcommand{\cbra}[1]{\left(#1\right)}
+% \newcommand{\abs}[1]{\left|#1\right|}
+% \newcommand{\setcond}[2]{\left\{#1\: \middle|\: #2\right\}}
+% \newcommand{\errnote}[1]{{ \small #1}} 
+\newcommand{\bigo}[1]{O\left(#1\right)}
+\newcommand{\half}{\nicefrac{1}{2}}
+%\newcommand{\Ex}[2]{\underset{#1}{\mathbb{E}} \left[ #2 \right]}
+\newcommand{\E}[2]{\mathop{\mathbb{E}}_{#1}\left[ #2 \right]}
+
+%tulasi macros
+\newcommand{\oroflinearforms}{hyperplane covering polynomials}
+\newcommand{\phcp}{PHCP}
+\renewcommand{\calL}{\mathcal{L}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\floorlogn}{\lfloor \log{n} \rfloor}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\lbdetail}{\frac{\log\cbra{\nicefrac1{8\eps}}\cdot\cbra{\log
+      n - \llepsinv}}{2C \log^2\cbra{\nicefrac1{C^2}\cdot
+      \log^4\cbra{\nicefrac1{8\eps}}\cdot \cbra{\log n -
+        \llepsinv}^3}}}
+\newcommand{\lbmain}{\log \binom{n}{\leq \log\cbra{\nicefrac1{\eps}}}}
+\newcommand{\lb}{\Omega \cbra{\frac{\lbmain}{\log^2 \cbra{\lbmain}}}}
+\newcommand{\lbinline}{\Omega \cbra{\lbmain / \log^2 \cbra{\lbmain}}}
+\newcommand{\llepsinv}{\log\log(\nicefrac1\eps)}
+\newcommand{\lepsinv}{\log(\nicefrac1\eps)}
+\newcommand{\epsinv}{\nicefrac1\eps}
+\newcommand{\Omegatilde}[1]{\widetilde\Omega \cbra{#1}}
+\newcommand{\bigomega}[1]{\Omega\cbra{#1}}
+\newcommand{\quarter}{\nicefrac{1}{4}}
+\newcommand{\zs}{(0,*)}
+
+\title{On the Real Probabilistic Degree of OR \thanks{A
+    preliminary version of this paper appeared in {\em Proc. $38$th IARCS Annual Conf.\ on Foundations of Software Tech.\ and
+  Theoretical Comp.\ Science (FSTTCS)} 2018~\cite{BhandariHMS2018}.}}
+
+\author{
+  Siddharth Bhandari\thanks{Tata Institute of Fundamental Research,
+    INDIA. email: {\tt
+      \{siddharth.bhandari,prahladh,tulasi.molli\}@tifr.res.in}. Research
+  of the second author supported in part by the Swarnajayanti Fellowship.}
+  \and Prahladh Harsha\samethanks 
+  \and Tulasimohan Molli\samethanks 
+  \and Srikanth Srinivasan\thanks{IIT Bombay, INDIA. email: {\tt srikanth.srinivasan@math.iitb.ac.in}}}
+
+\date{}
+
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                %
+%           Abstract                                             %
+%                                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+We study the probabilistic degree over $\reals$ of the $\OR$ function
+on $n$ variables. For $\eps \in (0,1/3)$, the $\eps$-error probabilistic degree of 
+any Boolean function $f:\zo^n\to \zo$ over $\reals$ is the smallest non-negative
+integer $d$ such that the following holds: there exists
+a distribution of polynomials $\distP \in \reals[x_1,\ldots,x_n]$ entirely
+supported on polynomials of degree at most $d$ such that for all $z
+\in \zo^n$, we have $\Pr_{P \sim \distP}[P(z) = f(z) ] \geq 1- \eps$.  It is
+known from the works of Tarui ({\em Theoret. Comput. Sci.} 1993) and
+Beigel, Reingold, and Spielman ({\em Proc.\ $6$th CCC} 1991), that the
+$\eps$-error probabilistic
+degree of the $\OR$ function is at most $O(\log n \cdot \lepsinv)$.  Our first observation
+is that this can be improved to $\bigo{\log {\genfrac{(}{)}{0pt}{}{n}{\leq \lepsinv}}}$ 
+which is better for small values of $\eps$. 
+
+In all known constructions of probabilistic polynomials for the $\OR$
+function (including the above improvement), the polynomials $P$ in the
+support of the distribution $\distP$ have the
+following special structure:
+\[ 
+P(x_1,\dots,x_n) = 1 - \prod_{i \in [t]} \left(1- L_i(x_1,\dots,x_n)\right),
+\]
+where each $L_i(x_1,\dots, x_n)$ is a linear form in the variables
+$x_1,\ldots,x_n$, i.e., the polynomial $1-P(\bar{x})$ is a product of affine
+forms. We show that the $\eps$-error probabilistic degree of
+$\OR$ when restricted to polynomials of the above form 
+is $\Omega\left( \log\binom{n}{\leq \lepsinv}/\log^2 \left( \log
+\binom{n}{\leq \lepsinv)}\right)\right)$, thus matching the above upper bound 
+(up to polylogarithmic factors).
+\end{abstract}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                %
+%           Introduction                                         %
+%                                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec:intro}
+Low-degree polynomial approximations of Boolean functions were introduced
+by Razborov in his celebrated work~\cite{Razborov1987} on proving
+lower bounds for the class of Boolean functions computed by low-depth
+circuits. We begin by recalling this notion of approximation over $\reals$.
+
+\begin{definition}[probabilistic degree]\label[definition]{def:pdeg}
+Given a Boolean function $f:\zo^n \to \zo$ and $\eps \in (0,1/3)$, an \emph{$\eps$-error
+  probabilistic polynomial} over $\reals$\footnote{Similar
+  notions over other fields are also studied. Unless otherwise
+  specified, we will be considering probabilistic polynomials over
+  the reals in this paper.} for $f$ is a
+distribution of polynomials $\distP(x_1,\ldots,x_n)\in \reals[x_1,\ldots,x_n]$ such that
+for any $z\in \{0,1\}^n$, we have $\Pr_{P\sim \distP}[P(z) \neq
+  f(z)] \leq \eps$. The \emph{$\eps$-error Probabilistic degree of
+    $f$}, denoted by $\pdeg_\eps(f)$, is the smallest non-negative
+  integer $d$ such that the following holds: there exists an $\eps$-error
+  probabilistic polynomial $\distP$ over $\reals$ such that $\distP$ is
+  entirely supported on polynomials of degree at most $d$. 
+\end{definition}
+
+Classical results in polynomial approximation of Boolean
+functions~\cite{TodaO1992,Tarui1993,BeigelRS1991} show that the
+$\OR$ function over $n$ variables, denoted by $\OR_n$, has $\eps$-error probabilistic
+degree at most $\bigo{\log n \cdot \lepsinv}$. This basic
+construction for the $\OR$ function is then recursively used to show that any function computed by an
+$\AC^0$ circuit of size $s$ and depth $d$ has $\eps$-error
+probabilistic degree at most
+$(\log s)^{\bigo{d}}\cdot \lepsinv$ (see work by the second and
+last author~\cite{HarshaS2019-ac0} for recent improvements). These results
+can then be used to prove, eg.~\cite{Smolensky1987}, a (slightly
+weaker) version of H{\aa}stad's celebrated theorem~\cite{Hastad1989}
+that parity does not have subexponential-sized $\AC^0$ circuits. These
+results were employed more recently by
+Braverman~\cite{Braverman2010} to prove that polylog-wise independence
+fools $\AC^0$ functions.
+
+Despite the fact that probabilistic polynomials for the $\OR$ function
+are such a basic
+primitive, it is surprising that we do not yet have a complete
+understanding of $\pdeg_\eps(\OR_n)$. As mentioned above, it is known from
+the works of Beigel, Reingold and Spielman~\cite{BeigelRS1991} and
+Tarui~\cite{Tarui1993} that $\pdeg_\eps(\OR_n) = \bigo{\log n \cdot \lepsinv}$.  
+The Schwartz-Zippel lemma implies that a dependence of $\bigomega{\lepsinv}$ is necessary in the above bound.
+However, until recently, it wasn't clear whether any dependence on $n$ is required
+in $\pdeg_\eps(\OR_n)$ over the reals~\footnote{For finite fields of constant size,
+Razborov~\cite{Razborov1987} showed that the $\varepsilon$-error
+probabilistic degree of $\OR_n$ is $\bigo{\lepsinv}$,
+independent of $n$, the number of the input bits.}. In recent papers of
+Meka, Nguyen and Vu~\cite{MekaNV2016} and the second and last author~\cite{HarshaS2019-ac0}, 
+it was shown using anti-concentration of low-degree polynomials that the 
+$\pdeg_{\quarter}(\OR_n) = \widetilde{\Omega}(\sqrt{\log n})$. The main objective of this paper
+is to obtain a better understanding of the $\eps$-error probabilistic
+degree of $\OR_n$, $\pdeg_\eps(\OR_n)$. In addition to being
+interesting in its own right, this question has bearing on the amount
+of independence needed to fool $\AC^0$ circuits. Recent improvements
+due to Tal~\cite{Tal2017} and~\cite{HarshaS2019-ac0} of Braverman's result demonstrate that
+$(\log s)^{2.5d +\bigo{1}}\cdot \lepsinv$-wise independence fools functions
+computed by $\AC^0$ circuits of size $s$ and depth $d$. An improvement
+of the upper bound on $\pdeg_\eps(\OR_n)$ to $\bigo{\log n +
+\lepsinv}$ could potentially strengthen this result to $(\log s)^{d +\bigo{1}}\cdot
+\lepsinv$, nearly matching the lower bound of $(\log s)^{d-1}\cdot \lepsinv$ due to Mansour~\cite{LubyV1996}. 
+
+The above discussion demonstrates that the current bounds on $\pdeg_{\varepsilon}(\OR_n)$ 
+fall short of being tight in two aspects: one, the dependence on $n$ in the lower bound is
+$\Omegatilde{\sqrt{\log n}}$ while in the upper bound it is $\bigo{\log
+n}$ and two, the joint dependence on $\eps$ and $n$ in the upper bound
+is multiplicative, i.e., $\bigo{\log n \cdot \lepsinv}$ while the
+current lower bounds can only show an additive
+$\Omegatilde{\sqrt{\log n}} + 
+\bigomega{\lepsinv}$ bound.
+
+Which of these bounds is tight? A casual observer might suspect that the upper bound is, 
+given the relatively neat expression. However, a closer look tells us  that it cannot be, 
+at least when $\varepsilon$ is quite small. For example, setting $\varepsilon = 1/2^{\Omega(n)}$, 
+the upper bound yields a degree of $O(n\log n),$ but it is a standard fact that any Boolean function 
+on $n$ variables can be represented exactly (i.e. with no error) as a polynomial of degree $n$. 
+Hence the upper bound is not tight in this regime. 
+
+Our first observation is that the upper bound of Tarui and Beigel et al.~\cite{BeigelRS1991} can indeed 
+be slightly improved to $\bigo{\log \binom{n}{\leq \lepsinv)}};$\footnote{Here, $\binom{N}{\leq \alpha}$
+denotes  $\sum_{i \leq \alpha} \binom{N}{i}$ for $0 \leq i \leq \alpha$.} note that this is asymptotically better than  
+$\bigo{\log n \cdot \lepsinv}$ for very small $\eps.$ This interpolates smoothly between the construction of 
+Tarui~\cite{Tarui1993} and Beigel et al.~\cite{BeigelRS1991} and the exact representation of degree $n$ mentioned above. 
+(See \cref{sec:upper} for details on this upper-bound construction.) 
+
+Given this observation, one might hope
+to prove a matching lower bound on the $\eps$-error
+probabilistic degree of $\OR_n$. We can indeed show such a bound (up to polylogarithmic factors) if we suitably
+restrict the class of polynomials being considered. While restricted,
+this subclass of polynomials nevertheless includes all polynomials
+that were used in previous upper bound constructions, including our
+own. Moreover, this result generalizes a result of Alon, Bar-Noy,
+Linial and Peleg~\cite{AlonBLP1991}, who prove such a result for a
+further restricted class of polynomials (mentioned at the end of this
+section) and for $\lepsinv = O(\log n)$.\footnote{The result
+  of~\cite{AlonBLP1991} is stated in a slightly different language,
+  but is essentially equivalent to a probabilistic degree lower bound
+  for $\OR_n$ for a suitable class of polynomials.}  A careful
+reworking of their analysis shows that their lower bound extends to
+even smaller $\epsilon$ to show a lower bound of $\Omega(\lbmain)$ for this smaller class of polynomials. 
+%Our lower bound works for all $\eps\in (0,1/3)$. 
+
+To state our result, we first need to describe the class of
+polynomials for which our bounds hold. To this end, we note that all
+known upper-bound constructions of probabilistic polynomials for the
+$\OR$ function have the following structure:
+\[
+P(x_1,\dots,x_n) = 1 - \prod_{i \in [t]} \left(1- L_i(x_1,\dots,x_n)\right),
+\]
+where each $L_i(x_1,\dots, x_n) = a_{i1} x_1 + a_{i2} x_2 + \cdots +
+a_{in}x_n$ is a linear form in the variables $x_1,\ldots,x_n$ (here, $a_{ij}
+\in \reals$). 
+
+This includes the improved upper-bound construction
+that achieves an $\eps$-probabilistic degree of $O(\log \binom{n}{\leq
+  \lepsinv})$ mentioned in the preceding paragraph. This motivates
+the following definition.
+
+\begin{definition}[hyperplane covering polynomials]\label[definition]{def:hcpdeg}
+A polynomial $P \in \reals[x_1,\ldots,x_n]$ is said to be a hyperplane
+covering polynomial of degree $t$ if there exist $t$ linear forms $L_1, \ldots, L_t$
+over the reals such that 
+\[
+P(x_1,\ldots, x_n ) = 1 - \prod_{i \in
+  [t]}\cbra{1-L_i(x_1,\ldots,x_n)} .
+\]
+For $\eps \in (0,1/2)$, the \emph{$\eps$-error hyperplane covering probabilistic degree of
+    $f$}, denoted by $\hcpdeg_\eps(f)$, is the smallest non-negative
+  integer $d$ such that the following holds: there exists an $\eps$-error
+  probabilistic polynomial $\distP$ over $\reals$ such that $\distP$ is
+  supported on hyperplane covering polynomials of degree at most $d$. 
+\end{definition}
+We call these polynomials hyperplane covering polynomials as these
+polynomials have the property that the points in the boolean hypercube where 
+the polynomial outputs 1 (i.e, the set $\{ z \in \zo^n \mid P(z) = 1\}$) 
+are a union of hyperplanes not passing through the origin. 
+We further note that all these
+polynomials satisfy the property that $P(\bar{0}) = 0$. Clearly,
+$\hcpdeg_\eps(f) \geq \pdeg_\eps(f)$. Also, since all upper-bound
+constructions for the OR polynomials are hyperplane covering
+polynomials, we not only have that $\pdeg_\eps(\OR_n) = \bigo{\log \binom{n}{\leq
+\lepsinv}}$ but also that $\hcpdeg_\eps(\OR_n) = \bigo{\log \binom{n}{\leq
+\lepsinv}}$. For this class of polynomials, we prove the following (almost) tight result on the 
+$\eps$-error hyperplane covering
+probabilistic degree of the $\OR$ function.
+
+\begin{theorem}[hyperplane covering degree of
+  $\OR_n$]\label{thm:hpdeg_lbd}
+For any any positive integer $n$ and $\eps \in (0,1/3)$,
+\[
+\hcpdeg_\eps(\OR_n) = \lb .
+\]
+\end{theorem} 
+
+It is open if this result can be extended to prove a tighter lower bound on
+the $\eps$-error probabilistic degree of the $\OR_n$ function. The special class of hyperplane covering polynomials 
+for which Alon, Bar-Noy, Peleg and Linial~\cite{AlonBLP1991} proved a similar bound is the class of 
+hyperplane covering polynomials where the linear forms are sums of variables 
+(i.e., $L_i(\bar{z}) = \sum_{j \in S_i}z_j$ for some $S_i \subseteq [n]$)
+% , for which  they proved an optimal lower bound of $\bigomega{\log^2 n}$ when $\lepsinv = O(\log n)$. 
+Ideally, one would have liked to extend their lower bound result for
+hyperplane covering polynomials where the linear forms are sums of
+variables to {\em all} polynomials. \cref{thm:hpdeg_lbd}, is a step in
+this direction, in that, it shows that
+their result can be extended to a slightly larger class, the set of
+all hyperplane covering polynomials (modulo polylogarithmic factors). We remark that though our 
+lower bound works for a larger class of polynomials, our proof technique is nevertheless inspired by their proof. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                %
+%          Upper bounds                                          %
+%                                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Upper bounds on probabilistic degree of OR}\label{sec:upper}
+    In this section, we describe the construction of a probabilistic polynomial 
+which shows that the  $\hcpdeg_\eps(\OR_n) = \bigo{\log \binom{n}{\leq \lepsinv}}$.
+  To begin with, we observe that the following
+``trivial'' hyperplane covering polynomial of degree $n$ exactly computes $\OR_n$
+everywhere on the Boolean hypercube:
+\[
+P_{\OR}(x) := 1- \prod_{i =1}^n \cbra{1- \frac1i\sum_{j \in [n]} x_j}.
+\]
+This is a polynomial which covers each Hamming slice of the hypercube
+with a different hyperplane. 
+We now recall the construction of Beigel, Reingold and
+Spielman~\cite{BeigelRS1991} and Tarui~\cite{Tarui1993}. 
+\begin{claim}For every non-negative integer $\ell$, there exists a distribution of linear forms $\distL_\ell$  such that if
+the Hamming weight of $x = (x_1,\ldots,x_n)$ lies in the interval
+$[2^\ell, 2^{\ell+1}]$, then $\prob{L \sim \distL_\ell}{L(x) = 1} =
+\bigomega{1}$.
+\end{claim}
+\begin{proof}
+    $\distL$ is defined as follows: pick a random set $S \subseteq [n]$ by picking each element of $[n]$ independently with probability $\frac{1}{2^{\ell}}$ and construct the linear polynomial 
+    \[L_S(x) := \sum_{i \in S} x_i\enspace.\]
+    For a non-zero input $x = (x_1,\ldots,x_n)$ such that the Hamming weight of $x$, denoted as $|x|$, is in $[2^\ell, 2^{\ell+1}]$, we have
+        \begin{align*}
+            \prob{S}{L_S(x) = 1} &= |x|\cbra{\frac{1}{2^\ell}} \cbra{1-\frac{1}{2^\ell}}^{|x|-1}&&[\text{where\ }0^0=1]\\
+                    &= \frac{|x|}{2^\ell} \exp{(-O(1))}&&[\because (1-a)^b\geq \exp{(-ab/1-a)}]\\
+                    &\geq  \Omega(1)\enspace.\qedhere
+        \end{align*}
+\end{proof}
+
+In the above proof we could have set $L_S(x)=\sum_{i\in S}\alpha_i
+x_i$ where each $\alpha_i\in \pm1$ u.a.r. and independently. The same proof shows that
+even with the new definition $\prob{S}{L_S(x) = 1}\geq \Omega(1)$. The
+idea behind introducing the $\alpha$'s is that even when $\sum_{i\in S}x_i>1$, it could be that $\sum_{i\in S}\alpha_i x_i=1$. However, this does not lead to improvements beyond possibly changing the constant hidden in the $\Omega(\cdot)$ notation.  
+ 
+The preceding claim is then used to construct $\eps$-error
+probabilistic polynomials for $\OR_n$ as follows. Divide the set of one's of the
+OR function in the Boolean hypercube, ie., $\zo^n\setminus
+\{\bar{0}\}$, into $\log n$ epochs $[2^0,2^1], [2^1,2^2], \ldots, [2^{\log n -1}, 2^{\log n}]$ where
+  each epoch $[2^\ell, 2^{\ell +1}]$ includes all strings whose
+  Hamming weight is in that range. For each such epoch $[2^\ell,
+  2^{\ell+1}]$, sample $t:=O(\log(1/\eps))$ independent linear forms
+  $L^{(\ell)}_i, i \in [t]$ from $\distL_\ell$ and consider the randomized
+  polynomial $P_\ell(x) := 1 - \prod_{i \in
+    [t]}(1-L^{(\ell)}_i(x))$. Clearly, for $x$ in the epoch
+  $[2^\ell, 2^{\ell +1}]$, we have $\Pr[P_\ell(x) = 1] \geq 1-
+  \eps$. Now, the randomized polynomial 
+\[
+P(x) := 1- \prod_{\ell \in [\log n]}(1-P_\ell(x)) = 1 - \prod_{\ell
+  \in [\log n]}\prod_{i \in [t]} (1- L^{(\ell)}_i)\ ,
+\]
+satisfies for all $x \in \zo^n\setminus \{\bar{0}\}$, $\Pr[P(x) = 1]
+\geq 1-\eps$. Also, clearly any such $P$ satisfies $P(\bar{0}) =
+0$. This polynomial is a hyperplane covering polynomial of degree at
+most $O(\log n \cdot \log(1/\eps))$.
+
+Now, suppose $\eps$ is very small, eg., $\eps = 2^{-n/10}$, then this construction is wasteful over the trivial construction $P_{\OR}$ since $O(\log n \cdot \log
+(1/\eps)) = O(n \log n)$. The improved bound of $\bigo{\log \binom{n}{\leq\log (1/\eps)}}$ 
+is obtained by ``interpolating'' between the trivial
+construction $P_{\OR}$ and the above construction. Since we know that the $\pdeg_\eps(\OR_n)$ is at least $\log (1/\eps)$, one might as well exactly compute $\OR_n$
+for the first $O(\log (1/\eps))$ Hamming slices of the hypercube and use
+the above randomized construction to cover the remaining slices using
+only $(\log n - \log \log (1/\eps))$ epochs, $[\log(1/\eps),
+2\log(1/\eps)], \ldots, [2^{\log n-1}, 2^{\log n}]$. Another way to view this is that when we focus on the epoch $[2^\ell, 2^{\ell+1}]$ and draw $t=O(\log(1/\eps))$ samples from $\distL_\ell$, the trivial polynomial $\prod_{i =2^\ell}^{2^{\ell+1}} \left(1- \frac1i\sum_{j \in [n]} x_j\right)$ has degree smaller than $O(\log(1/\eps))$ when $2^\ell < \log(1/\eps)$ or $\ell < \log\log(1/\eps)$.
+
+Formally, we construct the polynomial (where $P_\ell(x)$ and $L^{(\ell)}$ are as defined above)
+\begin{align*}
+    P(x) &:= 1- \cbra{\prod_{\ell \in [\log\log(1/\eps),\log n]}\cbra{1-P_\ell(x)}}\times \prod_{i =1}^{\log(1/\eps)} \left(1- \frac1i\sum_{j \in [n]} x_j\right) \\
+    &= 1 - \cbra{\prod_{\ell \in [\log\log(1/\eps),\log n]}\prod_{i \in [t]} \cbra{1- L^{(\ell)}_i}}\times \prod_{i =1}^{\log(1/\eps)} \left(1- \frac1i\sum_{j \in [n]} x_j\right).
+\end{align*}
+Clearly, $P$ is a hyperplane covering polynomial. For an input $x$ such that $|x|\leq \log(1/\eps)$, $P(x)=1$ as $\prod_{i =1}^{\log(1/\eps)} \left(1- \frac1i\sum_{j \in [n]} x_j\right)=0$. If $|x|\in [2^\ell, 2^{\ell+1}]$ where $\ell\geq \log\log(1/\eps)$, then from our previous argument we have $\Pr[P_l(x)=1]\geq 1-\eps$ and hence $\Pr[P(x)=1]\geq 1- \eps$.
+Hence, we have an $\eps$-error probabilistic polynomial of degree $O(\log (1/\eps) + (\log n - \log \log
+(1/\eps))\cdot \log(1/\eps))$ which is at most $O(\log \binom{n}{\leq\log(1/\eps)})$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                %
+%           Lowerbound section                                   %
+%                                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Lower bound on hyperplane covering degree of OR}
+    We now turn to the lower bound. 
+    To prove a lower bound of $d_\eps := \Omegatilde{\log \binom{n}{\leq \lepsinv}}$  
+    by Yao's minimax theorem (duality arguments) it suffices (and is necessary) to
+    demonstrate a ``hard'' distribution $\calD_{\eps}$ under which it is
+    hard to approximate the $\OR_n$ function by any hyperplane covering
+    polynomial of degree at most $d_\eps$. 
+
+    Similar to previous
+    works~\cite{MekaNV2016,HarshaS2019-ac0}, our choice of hard distribution is
+    motivated by the polynomial constructions in the upper bound. We
+    first need the following definitions to define the
+    hard distribution $\calD_\eps$.
+
+ \begin{definition}[$(0,1)$-restriction $\mu_p$] 
+    \label[definition]{def:zo-restriction}
+        The $\mu_p^{[n]}$ distribution on $\zo^n$ is obtained by setting
+        each variable $x_i$ independently to 1 with probability $p$
+        and 0 otherwise. 
+    \end{definition}
+    \begin{definition}[$\zs$-restriction $\rho_p$]
+    \label[definition]{def:zs-restriction} 
+    The $\rho_p^{[n]}$ distribution on $\bra{0,*}^n$ is obtained by setting
+    each variable to 0 independently with probability $(1-p)$ and
+    leaving it unset with probability $p$.
+    \end{definition}
+If the number of variables is $n$, we will drop the
+superscript and refer to the corresponding restrictions as just
+$\mu_p$ and $\rho_p$ respectively. 
+        
+    It will be convenient to view the distribution $\mu_p$ as applying
+    a $\zs$ restriction $\rho_{2p}$ followed by a
+    $\zo$ restriction $\mu_{\half}$ to the unset variables. In
+    short, $\mu_p^{[n]} = \mu_{\half}^{\rho_{2p}^{-1}(*)} \circ \rho_{2p}^{[n]}$.%\tmnote{this expression looks very complicated}
+    
+    \begin{definition}[hard distribution]
+	\label[definition]{def:hard_distribution}
+		Consider the distribution $\calD_\eps$ on the input set $\zo^n$ defined as follows:
+    	\begin{itemize}
+        	\item pick an integer $\ell \in I_\eps:= [1,\log n - \llepsinv]\cap \mathbb{Z}$ uniformly at random.
+        	\item pick $x \in \zo^n$ according to
+                  $\mu_{\nicefrac1{2^\ell}}$, i.e., for each $i \in [n]$,
+                  independently sets $x_i\gets 1$ with probability $\nicefrac1{2^\ell}$ and $0$ otherwise.
+    	\end{itemize}
+	\end{definition}
+    
+    The hard distribution $\calD_\eps$ is a convex combination of the
+    distributions $\mu_{\nicefrac1{2^{\ell}}}$ for $\ell \in I_\eps$. In other words, $\calD_\eps := \frac{1}{|I_\eps|}
+    \sum_{\ell \in I_\eps} \mu_{\nicefrac1{2^{\ell}}}$. Each of
+    the distributions $\mu_{\nicefrac1{2^{\ell}}}$ roughly correspond to the
+    epochs used in the upper-bound construction.
+    
+   \cref{thm:hpdeg_lbd} follows from the following ``distributional''
+   version of the theorem.
+    \begin{theorem}
+	\label{thm: deterministic_polynomial_lb_wrt_hard_dist}
+        Let $\calD_\eps$ be the hard distribution defined in
+        \cref{def:hard_distribution} and $P = 1- \prod_{i \in [t]}\cbra{1-L_i}$ be a hyperplane covering polynomial of degree $t$ such that       
+            \[\prob{x \sim \calD_\eps}{P(x) \neq OR_n(x)} \leq \eps\]
+        then, $t \geq \lb$. 
+	\end{theorem}
+	
+  We now introduce some notations that will be useful.   
+  %For a set $S$, $|S|$ denotes the cardinality of $S$, and for an input $x\in \bra{0,1}^n$, $|x|$ denotes the Hamming weight of $x$.
+	\begin{definition}[support of a linear form]
+	\label[definition]{def: support_linear_form}
+	For a linear form $L(x_1,\dots, x_n) = a_{1} x_1 + a_{2} x_2 + \cdots +
+a_{n}x_n$, we define the support of $L$, denoted as $\supp(L)$, to be the set of indices $i$ such that $a_i$ is non-zero i.e., $\{i\in[n]\mid a_i\neq 0\}$.
+	\end{definition}
+	
+	
+The proof of \cref{thm: deterministic_polynomial_lb_wrt_hard_dist} requires the following variant of the Schwartz-Zippel Lemma (due to Alon and F\"{u}redi~\cite{AlonF1993}) and Littlewood-Offord-Erd\"{o}s' anti-concentration lemma
+of linear forms over the reals, which we state below. 
+
+    \begin{lemma}[{\cite[Theorem~5]{AlonF1993}}]%needs citation
+	\label[lemma]{lem:sz}
+		Let $P\in \reals[x_1,\ldots,x_n]$ be a
+                polynomial of degree at most $d$ polynomial over $\reals$ computing a non-zero function over $\{0,1\}^n$. Then for $x$ chosen uniformly from $\{0,1\}^n,$
+			\[\prob{x \in \zo^n}{P(x) \neq 0} \geq \frac{1}{2^d}\ .\]
+	\end{lemma}
+
+
+	\begin{lemma}[anti-concentration of linear forms over $\reals$~\cite{LittlewoodO1938,Erdos1945}]
+	\label[lemma]{lem:lo}
+		Let $L(x_1,\ldots,x_k) = \sum a_i x_i$ be a linear
+                form which is supported on exactly $k$ variables
+                (i.e., $a_i \neq 0, i = 1,\ldots,k$. Then, for all $a
+                \in \reals$ and $x$ chosen uniformly from $\{0,1\}^n,$
+	        \[\prob{x\in \{0,1\}^n}{L_i(x) = a} \leq \frac{1}{\sqrt{k}}\ .\]
+	\end{lemma}
+
+        The rest of this section is devoted to proving \cref{thm: deterministic_polynomial_lb_wrt_hard_dist}. We begin with a
+        proof outline in \cref{sec:lboutline} followed by the proof in \cref{sec:lbproof}.
+
+\subsection{Proof outline}\label{sec:lboutline}  
+    We would like to show that hyperplane covering polynomial $P$ that
+    approximates $\OR_n$ w.r.t distribution $\calD_\eps$ (as in
+    \cref{thm: deterministic_polynomial_lb_wrt_hard_dist}) must have large degree. Let $\calL$ denote the set of linear
+    forms that appear in $P$, i.e., $\calL := \{ L_i \mid i \in [t]\}$. 
+    
+    Let us see how $P$ behaves on the
+    distribution $\mu_{\nicefrac1{2^{\ell}}}$ or equivalently $\mu_{\half} \circ
+    \rho_{\nicefrac1{2^{\ell-1}}}$. Let us see what happens to the linear forms
+    $\bra{L_i, i \in [t]}$ when the restriction $\rho:=\rho_{\nicefrac1{2^{\ell-1}}}$ is first
+    applied. We first consider two extreme cases.
+    \begin{description}
+        \item[Very few linear forms survive:] Suppose all but $\log
+            (\nicefrac1{2\eps})$ linear forms trivialize on the restriction $\rho$ (i.e. the
+            corresponding linear form $L_i|_{\rho}$ becomes 0). Then,
+            $(1-P)|_{\rho}$ is a polynomial of degree at most $\log
+            (\nicefrac1{2\eps})$ computing a non-zero function (since $1-P(\bar{0}) = 1$). Hence, by \cref{lem:sz}, it is not equal to 0
+            with probability at least $2\eps$. This implies that the polynomial
+            $P$ errs with probability at least $2\eps$ on the distribution $\mu_{\nicefrac1{2^{\ell}}}$.
+        \item[All linear forms that survive have large support:] Suppose all the
+            linear forms that survive post restriction $\rho$ have large
+            support, say $4t^2$. Then, by the anti-concentration of linear
+            forms over reals (\cref{lem:lo}), we have that
+            each linear form is 1 with probability at most
+            $\nicefrac1{\sqrt{4t^2}} = \nicefrac1{2t}$. Since there are $t$ linear forms, the
+            probability that any of them is 1 is at most
+            $\nicefrac{t}{2t}  = \half$. Thus, $P$ errs with probability  $\half$ on the distribution 
+            $\mu_{\nicefrac1{2^{\ell}}}$.
+    \end{description}
+
+    Note that the actual situation for each distribution
+    $\mu_{\nicefrac1{2^{\ell}}}$ will most likely be a combination of the above
+    two. We can then show that a combination of the above two arguments
+    will still work if the surviving linear forms have the following nice
+    structure. Let $\calL_{\rho}$ be the set of surviving linear forms
+    subsequent to the restriction $\rho$, i.e., $\calL_\rho : = \{ L_i|_\rho
+    \mid i \in[t], L_i|_\rho \neq 0\}$. Suppose $\calL_\rho$ can be
+    partitioned into 2 sets $\calL_\rho' \disjunion \calL_\rho''$ such that
+    the number of linear forms in $\calL_\rho'$ is small (less than
+    $O(\lepsinv)$) and each of the linear forms in $\calL_\rho''$
+    have large support even after subtracting $\union_{L \in
+    \calL_\rho'}\supp(L)$ from their support. How does one then show that a constant
+    faction of $\rho$'s satisfy that the corresponding linear forms
+    $\calL_\rho$ have this nice structure? For this, we draw inspiration
+    from the proof of Alon, Bar-Noy, Linial and
+    Peleg~\cite{AlonBLP1991}, where they prove similar bounds for
+    hyperplane covering polynomials supported entirely on linear forms
+    arising as sums of variables. They construct an appropriate
+    potential function that guarantees a similar property in their
+    lower-bound argument. 
+    
+    We use a slightly different potential function, which has the following nice property. If the total number of
+    linear forms is $t$, then
+    $\E{\ell}{\Phi_\ell(\calL)} = O(t/(\log n - \llepsinv))$ and
+    furthermore, whenever $\Phi_\ell(\calL)$ is small then the
+    corresponding set $\calL_\ell$ of surviving linear forms post
+    restriction $\rho_{\nicefrac1{2^{\ell-1}}}$ can be partitioned as
+    indicated above. This shows that for most $\ell$, $P$ errs on
+    computing the $\OR_n$ function unless $t$ is large. 
+
+\subsection{Proof of {\cref{thm: deterministic_polynomial_lb_wrt_hard_dist}}}\label{sec:lbproof}
+
+
+We now turn to defining the potential function $\Phi_\ell(\calL)$, indicated in
+the proof outline.
+    
+    \begin{definition}[potential function]
+    \label[definition]{def: potential function}
+The weight of a linear form $L$, denoted by $w(L)$, is defined as follows:
+    	    \[w(L) :=  
+    	                    \begin{cases}
+    	                        0 &\text{if} \supp(L) = \emptyset,\\
+    	                        \frac{1}{\log^2{(2|\supp(L)|)}}& \text{otherwise}.
+    	                    \end{cases}\]
+
+	    Given a collection $\calL = \{L_1, \ldots , L_t\}$ of linear
+            forms and $\ell$ a positive integer, the potential
+            function $\Phi_\ell(\calL)$ is defined as follows
+    	\[\Phi_\ell(\calL) :=
+          \sum_{i =1}^t \E{\rho_{\nicefrac1{2^{\ell-1}}}}{w\cbra{L_i|_{\rho_{\nicefrac1{2^{\ell-1}}}}}}
+          , \]
+where $\rho_{\nicefrac1{2^{\ell-1}}}$ is a $\zs$-restriction as
+defined in \cref{def:zs-restriction}.
+	\end{definition}
+
+The potential function $\Phi_\ell(\calL)$ satisfies the following two
+properties, given by \cref{prop:pot_exp,prop:partition}
+
+\begin{proposition}
+    \label[proposition]{prop:pot_exp}  
+    There exists a universal constant $C$ such that the following holds. 
+	    Let $\calL=\bra{L_1,\ldots, L_t}$ be any collection of $t$ 
+            linear forms, then
+    	    \[\E{\ell \in I_\eps}{\Phi_\ell(\calL)} \leq 
+              \frac{Ct}{|I_\eps|}\ .\]   
+	\end{proposition}
+
+	\begin{proposition}[partition of linear forms]
+	\label[proposition]{prop:partition}
+		Let $\calL= \{L_1,\ldots ,L_t \}$ be a collection of
+                $t$ non-zero linear forms and $K,R$
+                be two positive integers such that \[\sum_{i=1}^t
+                w(L_i) < \frac{R}{\log^2 (2RK)}\ .\]Then, there
+                exists a partition $\calL = \calL' \disjunion
+                \calL''$ of the set of linear forms $\calL$ such that 
+        \begin{itemize}
+            \item $|\calL'| \leq R$, 
+            \item  For all $L \in \calL''$, $|\supp(L) \setminus
+              \union_{L' \in \calL'} \supp(L')| \geq K$.
+        \end{itemize}
+\end{proposition}
+
+Before proving these two propositions, we first show how they imply
+\cref{thm: deterministic_polynomial_lb_wrt_hard_dist}. 
+
+\begin{proof}[Proof of {\cref{thm:
+      deterministic_polynomial_lb_wrt_hard_dist}}]
+Let \[t := \lbdetail\ ,\]
+where $C$ is the universal constant in \cref{prop:pot_exp}. Clearly, $t = \lb$.  
+Let $P = 1 - \prod_{i \in [t]}(1-L_i)$ be any hyperplane covering
+polynomial of degree $t$. To prove the theorem, it suffices if we show
+that $\Pr_{x \sim \calD_\eps}[ P(x) \neq \OR_n(x) ] > \eps$. To this end, we first note that $\Pr_{x\sim \calD_\eps}[x = \bar{0}] < \eps$ (since for all $\ell \in I_\eps$, we have $\ell \leq \log n - \llepsinv$). Hence, to prove the theorem it suffices to show that $\Pr_{x \sim \calD_\eps}[ P(x) \neq 1 ] \geq 2\eps$.
+
+Since
+$\calD_\eps = \frac{1}{|I_\eps|}
+    \sum_{\ell \in I_\eps} \mu_{\nicefrac1{2^{\ell}}}$ and
+    $\mu_p^{[n]} = \mu_{\half}\circ \rho_{2p}^{[n]}$, this is
+    equivalent to showing
+\begin{equation}\label{eq:contrad}
+\E{\ell \in I_\eps}{\E{\rho \sim \rho_{\nicefrac1{2^{\ell-1}}}}{
+    \Pr_{x\sim\mu_{\half}}\left[P|_{\rho}\left(x\right)\neq1
+ \right]}} \geq
+    2\eps\ .
+\end{equation}
+
+To this end, we first apply \cref{prop:pot_exp} to the set $\calL$ of
+$t$ linear forms in the polynomial $P$ to obtain that
+\[\E{\ell \in I_\eps}{\E{\rho\sim
+      \rho_{\nicefrac1{2^{\ell-1}}}}{\sum_{i\in [t]}w(L_i|_\rho)}}=\E{\ell \in I_\eps}{\Phi_\ell(\calL)} \leq 
+              \frac{Ct}{|I_\eps|}\ .\]   
+Applying Markov to the above inequality, we have
+\[ \Pr_{\ell,\  \rho}\left[ \sum_{i \in [t]} w(L_i|_\rho) \leq
+      \frac{2Ct}{|I_\eps|}\right] \geq \frac12\ .
+\]
+We call an$(\ell,\rho)$ pair \emph{good} if the above event holds,
+i.e., $\sum_{i=1}^t w(L_i|_{\rho}) \leq
+\nicefrac{2Ct}{|I_\eps|}$. Thus, 
+\begin{equation}\label{eq:good}
+\Pr_{\ell, \ \rho}[ (\ell,\rho) \text{ is good }] \geq \half\ .
+\end{equation}
+
+Now given a good $(\ell, \rho)$-pair, let $\calL_{\rho}$ be the set of surviving linear forms
+    subsequent to the restriction $\rho$, i.e., $\calL_\rho : = \{ L_i|_\rho
+    \mid i \in[t], L_i|_\rho \neq 0\}$. We thus have $\sum_{L \in \calL_\rho}
+    w(L) \leq \nicefrac{2Ct}{|I_\eps|}$. Let $K :=4t^2$ and $R: =
+    \log(\nicefrac1{8\eps})$. It can be checked that for this choice of parameters we have
+    $\nicefrac{2Ct}{|I_\eps|} < \nicefrac{R}{\log^2 (2RK)}$.
+% \begin{claim}\label{claim:parameters} $\frac{2Ct}{|I_\eps|} < \frac{R}{\log^2 (2RK)}$.
+% \end{claim}
+We can now apply \cref{prop:partition} to obtain a partition
+$\calL_\rho = \calL_\rho' \disjunion \calL_\rho''$ such that
+\begin{itemize}
+\item $|\calL_\rho'| \leq R = \log(\nicefrac1{8\eps})$,
+\item for all $L \in \calL_\rho''$, we have $|\supp(L) \setminus
+  \union_{L' \in \calL_\rho'} \supp(L') | \geq K=4t^2$.
+\end{itemize}
+Consider the polynomial $P|_\rho = 1 - \prod_{i \in [t]} (1-
+L_i|_\rho) = 1- \prod_{L \in \calL|_\rho}(1-L)$ subsequent to the restriction $\rho$. We will rewrite this
+polynomial as $P|_\rho = 1 - Q'_\rho \cdot Q''_\rho$ where the
+polynomials $Q_\rho'$ and $Q_\rho''$ are defined as follows (using the
+sets $\calL_\rho'$ and $\calL_\rho''$ respectively). 
+\begin{align*}
+Q_\rho'(x) &:= \prod_{L \in \calL_\rho'} (1-L(x)),\\
+Q_\rho''(x) &:= \prod_{L \in \calL_\rho''} (1-L(x)).
+\end{align*}
+Note that $P|_\rho = 1- Q_\rho'\cdot Q_\rho''$. 
+
+Since $|\calL_\rho'| \leq \log(\nicefrac1{8\eps})$, we have that the
+degree of $Q_\rho'$ is at most $\log(\nicefrac1{8\eps})$. Furthermore $Q'_\rho(x) \not\equiv 0$ (since $Q'_\rho(\bar{0})=1$). Thus applying
+\cref{lem:sz}, we have
+\[
+\Pr_{x \sim \mu_{\half}}\left[ Q_\rho'(x) \neq 0 \right] \geq 8\eps.
+\]
+Consider any setting of variables in $\union_{L \in
+  \calL_\rho'}\supp(L)$ such that $Q_\rho'(x) \neq
+0$. Even conditioned on setting all these variables, we know that each $L \in
+\calL_\rho''$ still has surviving support of size at least
+$4t^2$. Thus, by \cref{lem:lo}, we have for each $L \in \calL_\rho''$,
+\[
+\Pr_{x \sim \mu_{\half}}\left[ L(x) = 1 \mid Q_\rho'(x)
+  \neq 0\right] \leq \frac{1}{\sqrt{4t^2}} = \frac1{2t}.
+\]
+By a union bound, we have
+\[\Pr_{x \sim \mu_{\half}} \left[ Q''_\rho(x) = 0 \mid Q'_\rho(x) \neq
+    0 \right] = \Pr_{x \sim \mu_{\half}} \left[ \exists L \in \calL_\rho'',
+      L(x) = 1 \mid Q'_\rho(x) \neq
+    0 \right] \leq \frac{t}{2t} = \frac12.
+\]
+Hence, 
+\[\Pr_{x \sim \mu_{\half}} \left[ P|_\rho(x) \neq 1 \right] =
+  \Pr\left[Q'_\rho(x) \neq 0 \right] \cdot \Pr \left[ Q''_\rho(x) \neq 0 \mid Q'_\rho(x) \neq
+    0 \right] \geq  8\eps \cdot \frac12 = 4\eps.
+\]
+Finally averaging over all $(\ell, \rho)$ we have from above and \eqref{eq:good} 
+\[
+\Pr_{x \sim \calD_\eps} \left[ P(x) \neq 1\right] \geq \Pr_{\ell,
+  \rho}\left[ (\ell,\rho) \text{ is good } \right] \cdot \Pr\left[
+  P|_\rho(x) \neq 1 \mid  (\ell,\rho) \text{ is good } \right ] \geq
+\frac12 \cdot 4\eps = 2\eps.
+\]
+This proves \eqref{eq:contrad} and thus completes the proof of \cref{thm: deterministic_polynomial_lb_wrt_hard_dist}.
+\end{proof}
+
+We are now left with the proofs of
+\cref{prop:pot_exp,prop:partition}. We begin with the
+proof of \cref{prop:partition}.
+
+	\begin{proof}[Proof of {\cref{prop:partition}}]
+	    Consider the following algorithm to obtain the partition
+            $\calL = \calL'\disjunion \calL''$. 
+	    \begin{enumerate}
+		    \item Initialize $\calL' \gets \emptyset $ and
+                      $\calL'' \gets \calL$.
+		    \item While there exists an $L \in \calL''$ such
+                      that $|\supp(L) \setminus \union_{L' \in \calL'}\supp(L')| \leq
+                      K$, 
+                      \begin{itemize}
+                        \item Move such an $L$ from $\calL''$ to
+                          $\calL'$ (i.e., $\calL' \gets \calL' \union
+                          \{L\}$ and $\calL'' \gets \calL'' \setminus
+                          \{L\}$).
+                        \end{itemize}
+                      \end{enumerate}
+Let $\supp(\calL')$ be the union of supports of all linear forms in $\calL'$ $(i.e. \supp(\calL') = \cup_{L \in \calL'} \supp(L))$. 
+When the algorithm terminates, we have $|\supp(L) \setminus
+\supp(\calL')| \geq K$ for all $L \in \calL''$. 
+
+We now argue that $|\calL'| \leq R$. Each iteration of the while loop adds a linear form $L$ to $\calL'$
+with at most $K$ new variables. If the while loop is performed for $T$ iterations, then the support of each $L$ added to $\calL'$ is
+at most $TK$. We now argue that $T < R$. If not, then after exactly $R$ iterations of the while loop, we have that
+\[
+\sum_{L \in \calL} w(L) \geq \sum_{L \in \calL'} w(L) \geq
+\frac{R}{\log^2(2RK)},
+\]
+contradicting the hypothesis of the proposition. Hence $T < R$. The
+size of $\calL'$ is the number of iterations of the while loop and is
+thus bounded above by $R$. This completes the proof of the
+proposition.
+\end{proof}
+
+\begin{proof}[Proof of {\cref{prop:pot_exp}}]
+    	\begin{align*}
+        	\E{\ell \in I_\eps}{\Phi_\ell(\calL)} 
+        	            &=\E{\ell \in I_\eps}{\E{\rho \sim \rho_{\nicefrac1{2^{\ell-1}}}}{\sum_{i\in[t]}w(L_i|_{\rho})}}\\
+                        &= \frac1{|I_\eps|} \sum_{i\in[t]}
+                          \sum_{\ell\in I_\eps} \E{\rho}{w(L_i|_{\rho})}\\
+                        &\leq \frac{1}{|I_\eps|}\sum_{i\in [t]} \left(\underbrace{\sum_{\ell >  \log{|\supp(L_i)|}} \E{\rho}{w(L_i|_{\rho})}}_{T_1}
+                        + \underbrace{\sum_{\ell \leq \log{|\supp(L_i)|}} \E{\rho}{w(L_i|_{\rho})}}_{T_2}\right).
+	    \end{align*}
+    $T_1$ and $T_2$ are bound using \cref{claim:logbinomial1} and
+    \cref{claim:logbinomial2} respectively. Hence,
+        \begin{align*}
+    	    \E{\ell \in I_\eps}{\Phi_\ell(\calL)} &\leq \frac{1}{|I_\eps|} \sum_{i = 1}^{t} \left(2+ \frac{\pi^2}{6} + \frac{e}{e-1}\right)
+    	            \leq \frac{t}{|I_\eps|}\cdot \cbra{3 + \frac{\pi^2}{6}}.\qedhere
+        \end{align*}
+    \end{proof}
+    
+    \begin{claim}
+    \label[claim]{claim:logbinomial1}
+        Let $L$ be a linear form such that $|\supp(L)| = k$. Then
+            \[\sum_{\ell: \ell > \log{k}} \E{\rho \sim \rho_{\nicefrac1{2^{\ell-1}}}}{w(L|_{\rho})} \leq 2.\]
+            %\frac{|\supp(L)|}{2^\ell}
+    \end{claim}
+    \begin{proof}
+        \begin{align*}
+&\sum_{\ell: \ell > \log{k}} \E{\rho \sim \rho_{\nicefrac1{2^{\ell-1}}}}{w(L|_{\rho})}\\
+          & \leq  \sum_{\ell: \ell >  \log{k}}
+            \cbra{\prob{\rho}{|\supp(L|_{\rho})| = 0} \cdot 0 +
+            \prob{\rho}{|\supp(L|_{\rho})| \geq 1} \cdot 1}\\
+         &\leq   \sum_{\ell: \ell > \log{k}} \cbra{1 - \cbra{1 - \frac{1}{2^{\ell-1}}}^{k}}\\ 
+         &\leq \sum_{\ell: \ell > \log{k}}\frac{k}{2^{\ell-1}}
+           \qquad\qquad \qquad  [\because
+                                                                  (1-x)^n
+                                                                  \geq
+                                                                  1 -
+                                                                  nx,
+                                                                  \forall \ 
+                                                                   0
+                                                                  <x\leq 1]\\
+& \leq 2 . \qedhere
+        \end{align*}
+    \end{proof}
+    
+    \begin{claim}
+    \label[claim]{claim:logbinomial2}
+        Let $L$ be a linear form such that $|\supp(L)| = k $. Then
+            \[\sum_{\ell \leq \log k}\E{\rho \sim \rho_{\nicefrac1{2^{\ell-1}}}}{w(L|_{\rho})} \leq \frac{\pi^2}{6} + \frac{e}{e-1}\]
+    \end{claim}
+    \begin{proof}
+        \begin{align*}
+            \E{\rho}{w(L|_{\rho})} &\leq \prob{\rho}{|\supp(L|_{\rho})| \geq \frac{k}{2^\ell}} \frac{1}{\log^2{(k/2^\ell)}} + \prob{\rho}{ |\supp(L|_{\rho})| \leq \frac12 \cdot \frac{k}{ 2^{\ell-1}} }\\
+                                &\leq \frac{1}{(\log{(k)} - \ell)^2} +
+                                  \exp\cbra{-\frac14 \cdot
+                                  \frac{k}{2^{\ell-1}}} \qquad\qquad \qquad [\text{By Chernoff bound}]
+        \end{align*}
+        \begin{align*}
+            \sum_{\ell \leq \log k}\E{\rho \sim \calR_\ell}{w(L|_{\rho})} &\leq \sum_{\ell \leq \log{(k)}} \frac{1}{(\log{(k)} - \ell)^2} +  \sum_{\ell \leq \log{(k)}} \exp\cbra{-\frac{k}{2^{\ell+1}}}\\
+                    &\leq \frac{\pi^2}{6} +  \frac{e}{e-1}\ .
+        \end{align*}
+    \end{proof}
+\section*{Acknowledgements}
+The authors thanks Noga Alon for referring them to the paper on radio-broadcast~\cite{AlonBLP1991}.
+    
+
+
+{\small
+\bibliographystyle{prahladhurl}
+%\bibliography{/Users/prahladh/Dropbox/Documents/LaTeX/papers/jrnl-names-abb,/Users/prahladh/Dropbox/Documents/LaTeX/papers/prahladhbib,/Users/prahladh/Dropbox/Documents/LaTeX/papers/crossref}
+\bibliography{BHMS-bib}
+}
+
+
+
+\end{document}
+

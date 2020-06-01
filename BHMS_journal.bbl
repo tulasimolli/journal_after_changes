@@ -1,0 +1,146 @@
+\begin{thebibliography}{BHMS18}
+
+\bibitem[ABLP91]{AlonBLP1991}
+\textsc{Noga Alon}, \textsc{Amotz Bar{-}Noy}, \textsc{Nathan Linial}, and
+  \textsc{David Peleg}.
+\newblock \emph{A lower bound for radio broadcast}.
+\newblock J. Comput.\ Syst.\ Sci., 43(2):290--298, 1991.
+\newblock
+  \href{http://dx.doi.org/10.1016/0022-0000(91)90015-W}{\path{doi:10.1016/0022-0000(91)90015-W}}.
+
+\bibitem[AF93]{AlonF1993}
+\textsc{Noga Alon} and \textsc{Zolt{\'{a}}n F{\"{u}}redi}.
+\newblock \emph{Covering the cube by affine hyperplanes}.
+\newblock Eur. J. Comb., 14(2):79--83, 1993.
+\newblock
+  \href{http://dx.doi.org/10.1006/eujc.1993.1011}{\path{doi:10.1006/eujc.1993.1011}}.
+
+\bibitem[BHMS18]{BhandariHMS2018}
+\textsc{Siddharth Bhandari}, \textsc{Prahladh Harsha}, \textsc{Tulasimohan
+  Molli}, and \textsc{Srikanth Srinivasan}.
+\newblock \emph{On the probabilistic degree of {OR} over the {R}eals}.
+\newblock In \textsc{Sumit Ganguly} and \textsc{Paritosh Pandya}, eds.,
+  \emph{Proc. $38$th IARCS Annual Conf.\ on Foundations of Software Tech.\ and
+  Theoretical Comp.\ Science (FSTTCS)}, volume 122 of \emph{LIPIcs}, pages
+  5:1--5:12. Schloss Dagstuhl, 2018.
+\newblock \href{http://arxiv.org/abs/1812.01982}{\path{arXiv:1812.01982}},
+  \href{https://eccc.weizmann.ac.il/eccc-reports/2018/TR18-207}{\path{eccc:2018/TR18-207}},
+  \href{http://dx.doi.org/10.4230/LIPIcs.FSTTCS.2018.5}{\path{doi:10.4230/LIPIcs.FSTTCS.2018.5}}.
+
+\bibitem[Bra10]{Braverman2010}
+\textsc{Mark Braverman}.
+\newblock \emph{Polylogarithmic independence fools ${AC}^{0}$ circuits}.
+\newblock J. ACM, 57(5), 2010.
+\newblock (Preliminary version in {\em 24th IEEE Conference on Computational
+  Complexity}, 2009).
+\newblock
+  \href{https://eccc.weizmann.ac.il/eccc-reports/2009/TR09-011}{\path{eccc:2009/TR09-011}},
+  \href{http://dx.doi.org/10.1145/1754399.1754401}{\path{doi:10.1145/1754399.1754401}}.
+
+\bibitem[BRS91]{BeigelRS1991}
+\textsc{Richard Beigel}, \textsc{Nick Reingold}, and \textsc{Daniel~A.
+  Spielman}.
+\newblock \emph{The perceptron strikes back}.
+\newblock In \emph{Proc.\ $6$th IEEE Conf.\ on Structure in Complexity Theory},
+  pages 286--291. 1991.
+\newblock
+  \href{http://dx.doi.org/10.1109/SCT.1991.160270}{\path{doi:10.1109/SCT.1991.160270}}.
+
+\bibitem[Erd45]{Erdos1945}
+\textsc{Paul Erd\H{o}s}.
+\newblock \emph{On a lemma of {L}ittlewood and {O}fford}.
+\newblock Bull.\ Amer.\ Math.\ Soc., 51(12):898--902, 1945.
+\newblock
+  \href{http://dx.doi.org/10.1090/S0002-9904-1945-08454-7}{\path{doi:10.1090/S0002-9904-1945-08454-7}}.
+
+\bibitem[H{\aa}s89]{Hastad1989}
+\textsc{Johan H{\aa}stad}.
+\newblock \href{http://www.csc.kth.se/~johanh/largesmalldepth.pdf}
+  {\emph{Almost optimal lower bounds for small depth circuits}}.
+\newblock In \textsc{Silvio Micali}, ed., \emph{Randomness and Computation},
+  volume~5 of \emph{Advances in Computing Research}, pages 143--170. JAI Press,
+  Greenwich, Connecticut, 1989.
+\newblock (Preliminary version in {\em 18th STOC} 1986).
+
+\bibitem[HS19]{HarshaS2019-ac0}
+\textsc{Prahladh Harsha} and \textsc{Srikanth Srinivasan}.
+\newblock \emph{On polynomial approximations to ${AC}^0$}.
+\newblock Random Structures Algorithms, 54(2):289--303, 2019.
+\newblock (Preliminary version in {\em 20th RANDOM}, 2016).
+\newblock \href{http://arxiv.org/abs/1604.08121}{\path{arXiv:1604.08121}},
+  \href{http://dx.doi.org/10.1002/rsa.20786}{\path{doi:10.1002/rsa.20786}}.
+
+\bibitem[LO38]{LittlewoodO1938}
+\textsc{John~Edensor Littlewood} and \textsc{A.~Cyril Offord}.
+\newblock \emph{On the number of real roots of a random algebraic equation}.
+\newblock J. London\ Math. Soc., s1-13(4):288--295, 1938.
+\newblock
+  \href{http://dx.doi.org/10.1112/jlms/s1-13.4.288}{\path{doi:10.1112/jlms/s1-13.4.288}}.
+
+\bibitem[LV96]{LubyV1996}
+\textsc{Michael Luby} and \textsc{Boban Velickovic}.
+\newblock \emph{On deterministic approximation of {DNF}}.
+\newblock Algorithmica, 16(4/5):415--433, 1996.
+\newblock (Preliminary version in {\em 23rd STOC}, 1991).
+\newblock
+  \href{http://dx.doi.org/10.1007/BF01940873}{\path{doi:10.1007/BF01940873}}.
+
+\bibitem[MNV16]{MekaNV2016}
+\textsc{Raghu Meka}, \textsc{Oanh Nguyen}, and \textsc{Van Vu}.
+\newblock \emph{Anti-concentration for polynomials of independent random
+  variables}.
+\newblock Theory Comput., 12(11):1--17, 2016.
+\newblock \href{http://arxiv.org/abs/1507.00829}{\path{arXiv:1507.00829}},
+  \href{http://dx.doi.org/10.4086/toc.2016.v012a011}{\path{doi:10.4086/toc.2016.v012a011}}.
+
+\bibitem[Raz87]{Razborov1987}
+\textsc{Alexander~A. Razborov}.
+\newblock \href{http://mi.mathnet.ru/eng/mz4883}
+  {\emph{\foreignlanguage{russian}{Нжние оценки размера
+  схем ограниченной глубины в полном
+  базисе, содержащем функцию логического
+  сложения} ({R}ussian) [{L}ower bounds on the size of bounded depth
+  circuits over a complete basis with logical addition]}}.
+\newblock Mathematicheskie Zametki, 41(4):598--607, 1987.
+\newblock (English translation in {\em Mathematical Notes of the Academy of
+  Sciences of the USSR}, 41(4):333--338, 1987).
+\newblock
+  \href{http://dx.doi.org/10.1007/BF01137685}{\path{doi:10.1007/BF01137685}}.
+
+\bibitem[Smo87]{Smolensky1987}
+\textsc{Roman Smolensky}.
+\newblock \emph{Algebraic methods in the theory of lower bounds for {B}oolean
+  circuit complexity}.
+\newblock In \emph{Proc.\ $19$th ACM Symp.\ on Theory of Computing (STOC)},
+  pages 77--82. 1987.
+\newblock
+  \href{http://dx.doi.org/10.1145/28395.28404}{\path{doi:10.1145/28395.28404}}.
+
+\bibitem[Tal17]{Tal2017}
+\textsc{Avishay Tal}.
+\newblock \emph{Tight bounds on the {F}ourier {S}pectrum of ${AC}^0$}.
+\newblock In \emph{Proc.\ $32$nd Comput.\ Complexity Conf.}, volume~79 of
+  \emph{LIPIcs}, pages 15:1--15:31. Schloss Dagstuhl, 2017.
+\newblock
+  \href{https://eccc.weizmann.ac.il/eccc-reports/2014/TR14-174}{\path{eccc:2014/TR14-174}},
+  \href{http://dx.doi.org/10.4230/LIPIcs.CCC.2017.15}{\path{doi:10.4230/LIPIcs.CCC.2017.15}}.
+
+\bibitem[Tar93]{Tarui1993}
+\textsc{Jun Tarui}.
+\newblock \emph{Probabilistic polynomials, ${AC}^{0}$ functions, and the
+  polynomial-time hierarchy}.
+\newblock Theoret.\ Comput.\ Sci., 113(1):167--183, 1993.
+\newblock (Preliminary version in {\em 8th STACS}, 1991).
+\newblock
+  \href{http://dx.doi.org/10.1016/0304-3975(93)90214-E}{\path{doi:10.1016/0304-3975(93)90214-E}}.
+
+\bibitem[TO92]{TodaO1992}
+\textsc{Seinosuke Toda} and \textsc{Mitsunori Ogiwara}.
+\newblock \emph{Counting classes are at least as hard as the polynomial-time
+  hierarchy}.
+\newblock SIAM J. Comput., 21(2):316--328, 1992.
+\newblock (Preliminary version in {\em 6th Structure in Complexity Theory
+  Conference}, 1991).
+\newblock \href{http://dx.doi.org/10.1137/0221023}{\path{doi:10.1137/0221023}}.
+
+\end{thebibliography}

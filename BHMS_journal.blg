@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: BHMS_journal.aux
+The style file: prahladhurl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: BHMS-bib.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+You've used 16 entries,
+            3710 wiz_defined-function locations,
+            897 strings with 9807 characters,
+and the built_in function-call counts, 11686 in all, are:
+= -- 1099
+> -- 275
+< -- 15
++ -- 91
+- -- 89
+* -- 844
+:= -- 1442
+add.period$ -- 75
+call.type$ -- 16
+change.case$ -- 112
+chr.to.int$ -- 16
+cite$ -- 16
+duplicate$ -- 796
+empty$ -- 1052
+format.name$ -- 122
+if$ -- 2710
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 172
+newline$ -- 105
+num.names$ -- 52
+pop$ -- 302
+preamble$ -- 1
+purify$ -- 111
+quote$ -- 0
+skip$ -- 618
+stack$ -- 0
+substring$ -- 529
+swap$ -- 542
+text.length$ -- 15
+text.prefix$ -- 7
+top$ -- 0
+type$ -- 128
+warning$ -- 0
+while$ -- 78
+width$ -- 21
+write$ -- 234
